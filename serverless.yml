@@ -1,0 +1,44 @@
+service: search-service
+provider:
+  name: aws
+  runtime: rust
+  region: eu-central-1
+plugins:
+  # this registers the plugin
+  # with serverless
+  - serverless-rust
+# creates one artifact for each function
+package:
+  individually: true
+functions:
+  search:
+    # handler value syntax is `{cargo-package-name}.{bin-name}`
+    # or `{cargo-package-name}` for short when you are building a
+    # default bin for a given package.
+    handler: search
+    events:
+      - http:
+          path: /search
+          method: GET
+  add:
+    # handler value syntax is `{cargo-package-name}.{bin-name}`
+    # or `{cargo-package-name}` for short when you are building a
+    # default bin for a given package.
+    handler: add
+    events:
+      - http:
+          path: /add
+          method: POST      
+
+custom:
+  # this section allows for customization of the default
+  # serverless-rust plugin settings
+  # https://github.com/softprops/serverless-rust
+  rust:
+    # experimental! when set to true, artifacts are built locally outside of docker
+    dockerless: true
+
+    # when using local builds (dockerless), optionally provide a different target and linker for the compiler
+    # for example, allow local running on ARM macs
+    target: aarch64-apple-darwin
+    linker: clang

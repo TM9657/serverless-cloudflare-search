@@ -1,0 +1,2 @@
+[workspace]
+members = ["search", "index", "add"]
