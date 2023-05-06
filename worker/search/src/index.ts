@@ -1,4 +1,7 @@
 import { CorsResponse } from "util/cors";
+import { MiniSearch } from "util/types";
+import config from "../../../config.json";
+import { loadIndex } from "util";
 export interface Env {
   // Example binding to KV. Learn more at https://developers.cloudflare.com/workers/runtime-apis/kv/
   // MY_KV_NAMESPACE: KVNamespace;
@@ -7,11 +10,18 @@ export interface Env {
   // MY_DURABLE_OBJECT: DurableObjectNamespace;
   //
   // Example binding to R2. Learn more at https://developers.cloudflare.com/workers/runtime-apis/r2/
-  // MY_BUCKET: R2Bucket;
+  SEARCH_BUCKET: R2Bucket;
   //
   // Example binding to a Service. Learn more at https://developers.cloudflare.com/workers/runtime-apis/service-bindings/
   // MY_SERVICE: Fetcher;
 }
+
+let indices = new Map<string, MiniSearch<any>>();
+
+type SearchBody = {
+  index: string;
+  term: string;
+};
 
 export default {
   async fetch(
@@ -19,6 +29,25 @@ export default {
     env: Env,
     ctx: ExecutionContext
   ): Promise<Response> {
-    return new CorsResponse("Hello World!").finalize(request);
+    const { index, term }: SearchBody = await request.json();
+    console.log("index: " + index + " term: ", term);
+    if (!index || !term)
+      return new CorsResponse("Invalid request", 400).finalize(request);
+    if (term.length < config.minSearch)
+      return new CorsResponse("Term too short", 400).finalize(request);
+    if (!indices.has(index)) {
+      const serialied = await env.SEARCH_BUCKET.get(index);
+      if (!serialied)
+        return new CorsResponse("Index not found", 404).finalize(request);
+      const deserialized = await loadIndex(serialied);
+      indices.set(index, deserialized);
+    }
+    const result = indices.get(index);
+    if (!result)
+      return new CorsResponse("Index not found, internal error", 404).finalize(
+        request
+      );
+    const search = result.search(term);
+    return new CorsResponse(JSON.stringify(search)).finalize(request);
   },
 };

@@ -9,7 +9,12 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20230419.0",
+    "@tm9657/tsconfig": "^1.2.0"
+  },
   "dependencies": {
-    "flexsearch": "^0.7.31"
+    "fflate": "^0.7.4",
+    "minisearch": "^6.0.1"
   }
 }

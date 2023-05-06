@@ -1,3 +1,5 @@
 {
-  "cors": [""]
+  "cors": [""],
+  "secret": "",
+  "minSearch": 3
 }

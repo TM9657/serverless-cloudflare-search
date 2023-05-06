@@ -4,3 +4,7 @@ compatibility_date = "2023-05-02"
 # node_compat = true
 send_metrics = true
 logpush = true
+
+[[r2_buckets]]
+binding = 'SEARCH_BUCKET' # <~ valid JavaScript variable name
+bucket_name = 'serverless-search'

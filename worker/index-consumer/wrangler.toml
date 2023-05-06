@@ -10,3 +10,8 @@ logpush = true
   max_concurrency = 1
   max_batch_size = 100
   max_batch_timeout = 30
+
+[[r2_buckets]]
+binding = 'SEARCH_BUCKET' # <~ valid JavaScript variable name
+bucket_name = 'serverless-search'
+
