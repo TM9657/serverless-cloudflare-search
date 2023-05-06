@@ -1,0 +1,12 @@
+name = "search-index-consumer"
+main = "src/index.ts"
+compatibility_date = "2023-05-02"
+# node_compat = true
+send_metrics = true
+logpush = true
+
+[[queues.consumers]]
+  queue = "search-indexing-queue"
+  max_concurrency = 1
+  max_batch_size = 100
+  max_batch_timeout = 30

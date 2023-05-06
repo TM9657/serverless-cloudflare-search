@@ -1,0 +1,10 @@
+name = "search-index"
+main = "src/index.ts"
+compatibility_date = "2023-05-02"
+# node_compat = true
+send_metrics = true
+logpush = true
+
+[[queues.producers]]
+  queue = "search-indexing-queue"
+  binding = "SEARCH_INDEXING_QUEUE"

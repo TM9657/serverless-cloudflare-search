@@ -1,0 +1,5 @@
+{
+  "extends": "@tm9657/tsconfig/worker.json",
+  "include": ["."],
+  "exclude": ["dist", "build", "node_modules"]
+}

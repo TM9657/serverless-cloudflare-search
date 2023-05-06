@@ -1,0 +1,6 @@
+name = "search-search"
+main = "src/index.ts"
+compatibility_date = "2023-05-02"
+# node_compat = true
+send_metrics = true
+logpush = true
