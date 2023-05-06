@@ -1,4 +1,5 @@
 import { CorsResponse } from "util/cors";
+import { SearchQueueMessage } from "util/types";
 export interface Env {
   // Example binding to KV. Learn more at https://developers.cloudflare.com/workers/runtime-apis/kv/
   // MY_KV_NAMESPACE: KVNamespace;
@@ -14,7 +15,11 @@ export interface Env {
 }
 
 export default {
-  async queue(batch: MessageBatch, env: Env, ctx: ExecutionContext) {
+  async queue(
+    batch: MessageBatch<SearchQueueMessage>,
+    env: Env,
+    ctx: ExecutionContext
+  ) {
     for (const msg of batch.messages) {
       // TODO: do something with the message
       // Explicitly acknowledge the message as delivered
@@ -22,3 +27,5 @@ export default {
     }
   },
 };
+
+
