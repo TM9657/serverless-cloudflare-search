@@ -26,6 +26,7 @@ export class CorsResponse {
       "X-Frame-Options": "DENY",
       "Cache-Control": "no-store",
       "Content-Security-Policy": "frame-ancestors 'none'",
+      "x-provided-by": "serverless-cloudflare-search@tm9657.de",
     };
 
     if (request.method === "OPTIONS") {
