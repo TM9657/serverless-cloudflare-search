@@ -1,6 +1,6 @@
 <a href="https://tm9657.de?ref=github"><p align="center"><img width=250 src="https://cdn.tm9657.de/tm9657/images/serverless_search.png" /></p></a>
 
-# Serverless Search on Cloudflare
+# 🔍🌩️ Serverless Search on Cloudflare
 Using Cloudflare Worker + Queues + R2 Storage (+ Cache, TODO) to implement a small scale to zero search system that is reasonably fast and cheap.
 Benchmark welcome for performance measure :)
 
