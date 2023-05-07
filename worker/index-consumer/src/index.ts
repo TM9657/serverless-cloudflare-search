@@ -1,5 +1,6 @@
 import { loadIndex, saveIndex } from "util";
 import { SearchQueueMessage, Options, MiniSearch } from "util/types";
+import { cachePut } from "util/cache";
 export interface Env {
   // Example binding to KV. Learn more at https://developers.cloudflare.com/workers/runtime-apis/kv/
   // MY_KV_NAMESPACE: KVNamespace;
@@ -33,7 +34,10 @@ export default {
       const { config, document, index } = msg.body;
       const indexFile = indices.has(index)
         ? indices.get(index)?.index
-        : await loadIndex(await bucket.get(index), config);
+        : await loadIndex(
+            (await (await bucket.get(index))?.text()) || "",
+            config
+          );
       if (!indexFile) continue;
       changed.add(index);
       try {
@@ -54,6 +58,7 @@ export default {
       };
 
       await bucket.put(changedIndex, await saveIndex(index, config));
+      await cachePut(changedIndex, await saveIndex(index, config));
     }
 
     batch.ackAll();
