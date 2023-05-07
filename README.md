@@ -24,7 +24,7 @@ CLOUDFLARE_AUTH_EMAIL=
 CLOUDFLARE_API_TOKEN=
 ```
 
-Install: `pnpm install` ➡️ populates your config with a strong secret
+>Install: `pnpm install` ➡️ populates your config with a strong secret
 Init: `pnpm run initialize` ➡️ creates the bucket and queue
 Build: `npx turbo build` ➡️ publishes your workers to cloudflare
 
