@@ -38,6 +38,6 @@ For a movie dataset with **17920 documents** a search takes *800ms first time* (
 - Investigate Durable Object for faster initial response
 - Add serverless setup for AWS deployment
 
-**Provided by TM9657 GmbH @ MIT**
+**Provided by TM9657 GmbH with ❤️**
 ### Check out some of our products:
 - [Kwirk.io](https://kwirk.io?ref=github) (Text Editor with AI integration, privacy focus and offline support)

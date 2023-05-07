@@ -36,10 +36,30 @@ export default {
     if (term.length < config.minSearch)
       return new CorsResponse("Term too short", 400).finalize(request);
     if (!indices.has(index)) {
-      const serialied = await env.SEARCH_BUCKET.get(index);
-      if (!serialied)
+      const cacheUrl = new URL(`https://${index}.search`);
+      const cacheKey = new Request(cacheUrl.toString());
+      let searchCache = await caches.open("custom:serverless-search");
+      let serialized = await(await searchCache.match(cacheKey))?.text();
+      if (!serialized) {
+        console.log("cache miss");
+        serialized = await(await env.SEARCH_BUCKET.get(index))?.text();
+        if (serialized)
+          await searchCache.put(
+            cacheKey,
+            new Response(serialized, {
+              headers: {
+                "Cache-Control": "public, max-age=1800",
+                Expires: new Date(Date.now() + 1800 * 1000).toUTCString(),
+                "Last-Modified": new Date().toUTCString(),
+              },
+            })
+          );
+      } else {
+        console.log("cache hit");
+      }
+      if (!serialized)
         return new CorsResponse("Index not found", 404).finalize(request);
-      const deserialized = await loadIndex(serialied);
+      const deserialized = await loadIndex(serialized);
       indices.set(index, deserialized);
     }
     const result = indices.get(index);
