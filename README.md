@@ -1,10 +1,12 @@
+<a href="https://tm9657.de?ref=github"><p align="center"><img width=250 src="https://cdn.tm9657.de/tm9657/images/serverless_search.png" /></p></a>
+
 # Serverless Search on Cloudflare
 Using Cloudflare Worker + Queues + R2 Storage (+ Cache, TODO) to implement a small scale to zero search system that is reasonably fast and cheap.
 Benchmark welcome for performance measure :)
 
 Endpoints:
-- */search*   - public
-- */index*    - access restricted (see config)
+- **search**   - public
+- **index**    - access restricted (see config)
 
 Cached Index saved in R2. Cache read on search request. 
 Queue -> Writing Index (Batch size and concurrency 0)
@@ -22,9 +24,9 @@ CLOUDFLARE_AUTH_EMAIL=
 CLOUDFLARE_API_TOKEN=
 ```
 
-Install: `pnpm install`
-Init: `pnpm run initialize`
-Build: `npx turbo build`
+Install: `pnpm install` ➡️ populates your config with a strong secret
+Init: `pnpm run initialize` ➡️ creates the bucket and queue
+Build: `npx turbo build` ➡️ publishes your workers to cloudflare
 
 ## "Benchmark"
 This project is meant for smaller datasets (cheap serverless search).
@@ -33,3 +35,5 @@ For a movie dataset with **17920 documents** a search takes *800ms first time* (
 ## Todo
 - Cache index-file for faster initial response
 - Alternative Flexsearch implementation (Problems with export / import and types)
+- Investigate Durable Object for faster initial response
+- Add serverless setup for AWS deployment
