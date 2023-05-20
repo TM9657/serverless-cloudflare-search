@@ -8,7 +8,7 @@
 </p>
 
 # 🔍🌩️ Serverless Search on Cloudflare
-Using Cloudflare Worker + Queues + R2 Storage (+ Cache, TODO) to implement a small scale to zero search system that is reasonably fast and cheap.
+Using Cloudflare Worker + Queues + R2 Storage + Cache to implement a small scale to zero search system that is reasonably fast and cheap.
 Benchmark welcome for performance measure :)
 
 Endpoints:
@@ -28,7 +28,6 @@ create a .env file in your root with the following parameter:
 ```
 CLOUDFLARE_AUTH_KEY=
 CLOUDFLARE_AUTH_EMAIL=
-CLOUDFLARE_API_TOKEN=
 ```
 
 > - `pnpm install` ➡️ populates your config with a strong secret
@@ -40,7 +39,6 @@ This project is meant for smaller datasets (cheap serverless search).
 For a movie dataset with **17920 documents** a search takes *800ms first time* (downloading the index from R2), after that we get a worker performance of *50-60ms per search*.
 
 ## Todo
-- Cache index-file for faster initial response
 - Alternative Flexsearch implementation (Problems with export / import and types)
 - Investigate Durable Object for faster initial response
 - Add serverless setup for AWS deployment
