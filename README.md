@@ -42,6 +42,7 @@ For a movie dataset with **17920 documents** a search takes *800ms first time* (
 - Alternative Flexsearch implementation (Problems with export / import and types)
 - Investigate Durable Object for faster initial response
 - Add serverless setup for AWS deployment
+- Add CLI tool
 
 **Provided by TM9657 GmbH with ❤️**
 ### Check out some of our products:
